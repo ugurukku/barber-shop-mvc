@@ -5,8 +5,7 @@ import az.millisoft.first.repository.BarberRepository;
 import az.millisoft.first.repository.BranchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -20,7 +19,7 @@ public class GeneralController {
 
     private final BranchRepository branchRepository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping( "/")
     public ModelAndView homePage(){
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("barbers",barberRepository.findAll());
@@ -28,5 +27,7 @@ public class GeneralController {
         modelAndView.addObject("reservation",new Reservation());
         return modelAndView;
     }
+
+
 
 }
