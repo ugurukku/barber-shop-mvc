@@ -1,8 +1,10 @@
 package az.millisoft.first.controller;
 
 import az.millisoft.first.entity.Barber;
+import az.millisoft.first.entity.Service;
 import az.millisoft.first.repository.BarberRepository;
 import az.millisoft.first.repository.ReservationRepository;
+import az.millisoft.first.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ public class AdminController {
     private final ReservationRepository reservationRepository;
 
     private final BarberRepository barberRepository;
+
+    private final ServiceRepository serviceRepository;
 
     @GetMapping
     public String admin(){
@@ -60,8 +64,25 @@ public class AdminController {
     }
 
     @GetMapping( "/services")
-    public String services(){
-        return "services";
+    public ModelAndView services(){
+        ModelAndView modelAndView = new ModelAndView("services");
+        modelAndView.addObject("services",serviceRepository.findAll());
+        modelAndView.addObject("serviceRequest",new Service());
+        return modelAndView;
+    }
+
+    @GetMapping( "/services/edit/{id}")
+    public ModelAndView servicesEdit(@PathVariable("id") Integer id){
+        Service service = serviceRepository.findById(id).orElseThrow();
+        ModelAndView modelAndView = new ModelAndView("services-edit");
+        modelAndView.addObject("service", service);
+        return modelAndView;
+    }
+
+    @PostMapping( "/services/edit")
+    public RedirectView servicesEditPost(@ModelAttribute Service service){
+        serviceRepository.save(service);
+        return new RedirectView("/admin/services");
     }
 
     @GetMapping( "/branches")

@@ -1,7 +1,9 @@
 package az.millisoft.first.controller;
 
 import az.millisoft.first.entity.Barber;
+import az.millisoft.first.entity.Service;
 import az.millisoft.first.repository.BarberRepository;
+import az.millisoft.first.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +20,7 @@ import java.util.Objects;
 public class ImageController {
 
     private final BarberRepository barberRepository;
+    private final ServiceRepository serviceRepository;
 
     @RequestMapping(value = "/barber/{id}",method = RequestMethod.GET,produces = "image/webp")
     public byte[] getBarberImage(@PathVariable("id") String id) throws IOException {
@@ -42,6 +45,32 @@ public class ImageController {
 
         return new RedirectView("/admin/barbers/edit/" + id);
     }
+
+
+    @RequestMapping(value = "/service/{id}",method = RequestMethod.GET,produces = "image/webp")
+    public byte[] getServiceImage(@PathVariable("id") String id) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\ugurk\\Desktop\\images\\service\\"+ id);
+        return fileInputStream.readAllBytes();
+
+    }
+
+    @PostMapping("/service/{serviceId}")
+    public RedirectView addServiceImage(@PathVariable("serviceId") Integer id, MultipartFile file) throws IOException {
+
+        String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
+        String fileName = id + "." + extension;
+
+        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\ugurk\\Desktop\\images\\service\\" + fileName);
+        fileOutputStream.write(file.getBytes());
+        fileOutputStream.close();
+
+        Service service = serviceRepository.findById(id).orElseThrow();
+        service.setImageLink("http://localhost:8080/images/service/"+ fileName);
+        serviceRepository.save(service);
+
+        return new RedirectView("/admin/services/edit/" + id);
+    }
+
 
 
 }

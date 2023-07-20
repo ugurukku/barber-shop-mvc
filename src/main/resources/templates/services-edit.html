@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/barbers" class="nav-link active">
+                    <a href="/admin/barbers" class="nav-link link-dark">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#speedometer2"></use>
                         </svg>
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/services" class="nav-link link-dark">
+                    <a href="/admin/services" class="nav-link active">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#table"></use>
                         </svg>
@@ -94,65 +94,42 @@
 
     </div>
 
-    <div class="col-9">
+    <div class="col-9 mt-lg-5 ">
 
+        <form method="post" action="/admin/services/edit" th:object="${service}">
+            <input th:field="${service.id}" hidden>
+            <input th:field="${service.imageLink}" hidden>
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Full name</label>
+                <input th:field="${service.name}" type="text" class="form-control" id="fullName" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="instagramLink" class="form-label">Instagram link</label>
+                <input th:field="${service.price}" type="text" class="form-control" id="instagramLink">
+            </div>
 
-        <div class="mt-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
-            <h6>Add new Barber</h6>
+        <div class="row  mt-lg-5 ">
 
-            <form th:action="@{/admin/barbers/edit}" method="post" th:object="${barberRequest}">
-                <div class="mb-3">
-                    <label for="fullName" class="form-label">Full name</label>
-                    <input th:field="${barberRequest.fullName}" type="text" class="form-control" id="fullName" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="instagramLink" class="form-label">Instagram link</label>
-                    <input type="text" th:field="${barberRequest.instagramLink}" class="form-control" id="instagramLink">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <div class="col">
+                <h3>Previous image</h3>
+                <img height="100px" th:src="${service.getImageLink()}">
+            </div>
+            <div  class="col">
+                <form method="post" th:action="@{|/images/service/${service.getId()}|}" enctype="multipart/form-data">
+                    Select File: <input onchange="changeOnFile(event)" type="file" name="file"/>
+                    <button class="btn btn-warning" type="submit">Submit</button>
+                    <div id="addImage" class="justify-content-center">
+
+                    </div>
+                </form>
+
+            </div>
+
         </div>
 
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Full name</th>
-                <th scope="col">Instagram</th>
-                <th scope="col">Image</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="barber : ${barbers}">
-                <th th:text="${barber.getId()}" scope="row">1</th>
-                <td th:text="${barber.getFullName()}">Mark</td>
-                <td th:text="${barber.getInstagramLink()}">Otto</td>
-                <td>
-                    <a target="_blank" th:href="${barber.getImageLink()}">
-                        <img height="30px" th:src="${barber.getImageLink()}">
-                    </a>
-                </td>
-                <td>
-                    <form th:action="@{|/admin/reservations/${barber.getId()}|}" method="post">
-                        <button type="submit" class="btn btn-outline-danger">
-                            <i class="bi bi-trash"></i>
-                            DELETE
-                        </button>
-                    </form>
-                </td>
-                <td>
-                    <a th:href="@{|/admin/barbers/edit/${barber.getId()}|}">
-                        <button type="button" class="btn btn-primary">
-                            <i class="bi bi-pencil-square"></i>
-                            EDIT
-                        </button>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 
 
@@ -162,6 +139,28 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/click-scroll.js"></script>
 <script src="/js/custom.js"></script>
+<script>
 
+    function changeOnFile(event){
+        let image = document.createElement('img');
+        console.log(URL.createObjectURL(event.target.files[0]))
+        image.src = URL.createObjectURL(event.target.files[0]);
+        image.height = 50;
+
+        let div = document.getElementById('addImage');
+
+        div.innerHTML = ' ';
+
+        let h6 = document.createElement('h6');
+        h6.innerText = 'Selected image: ';
+
+        div.appendChild(h6);
+        div.appendChild(image);
+
+
+
+    }
+
+</script>
 </body>
 </html>

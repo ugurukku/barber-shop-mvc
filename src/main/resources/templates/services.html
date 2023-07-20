@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin panel</title>
@@ -8,6 +8,7 @@
         *{
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         .nav-link.link-dark:hover {
@@ -81,6 +82,65 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="col-8">
+        <div class="mt-5">
+
+            <h6>Add new Service</h6>
+
+            <form th:action="@{/admin/services/edit}" method="post" th:object="${serviceRequest}">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Service name</label>
+                    <input th:field="${serviceRequest.name}" type="text" class="form-control" id="fullName" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="instagramLink" class="form-label">Service price</label>
+                    <input type="text" th:field="${serviceRequest.price}" class="form-control" id="instagramLink">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Service name</th>
+                <th scope="col">Service price</th>
+                <th scope="col">Image</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="service : ${services}">
+                <th th:text="${service.getId()}" scope="row">1</th>
+                <td th:text="${service.getName()}">Mark</td>
+                <td th:text="${service.getPrice()}">Otto</td>
+                <td>
+                    <a target="_blank" th:href="${service.getImageLink()}">
+                        <img height="30px" th:src="${service.getImageLink()}">
+                    </a>
+                </td>
+                <td>
+                    <form th:action="@{|/admin/reservations/${service.getId()}|}" method="post">
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                            DELETE
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <a th:href="@{|/admin/services/edit/${service.getId()}|}">
+                        <button type="button" class="btn btn-primary">
+                            <i class="bi bi-pencil-square"></i>
+                            EDIT
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 
