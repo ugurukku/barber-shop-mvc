@@ -34,9 +34,9 @@
     <div class="col-4">
 
         <div class="d-flex flex-column flex-shrink-0 p-3 bg-light min-vh-100" style="width: 280px;">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <a href="/admin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                <span class="fs-4">Sidebar</span>
+                <span class="fs-4">BarberShop ADMIN</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
@@ -81,6 +81,59 @@
             </div>
         </div>
 
+    </div>
+
+
+    <div class="col-8">
+        <div class="mt-5">
+
+            <h6>Add new Branch</h6>
+
+            <form th:action="@{/admin/branches/edit}" method="post" th:object="${branchRequest}">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Branch name</label>
+                    <input th:field="${branchRequest.name}" type="text" class="form-control" id="fullName" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="instagramLink" class="form-label">Branch location</label>
+                    <input type="text" th:field="${branchRequest.location}" class="form-control" id="instagramLink">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Branch name</th>
+                <th scope="col">Branch location</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="branch : ${branches}">
+                <th th:text="${branch.getId()}" scope="row">1</th>
+                <td th:text="${branch.getName()}">Mark</td>
+                <td th:text="${branch.getLocation()}">Otto</td>
+                <td>
+                    <form th:action="@{|/admin/branches/${branch.getId()}|}" method="post">
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                            DELETE
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <a th:href="@{|/admin/branches/edit/${branch.getId()}|}">
+                        <button type="button" class="btn btn-primary">
+                            <i class="bi bi-pencil-square"></i>
+                            EDIT
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 

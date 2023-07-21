@@ -2,40 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
   <title>Please Log In</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500&display=swap" rel="stylesheet">
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 
   <link href="/css/bootstrap-icons.css" rel="stylesheet">
 
   <link href="/css/templatemo-barber-shop.css" rel="stylesheet">
+
+  <style>
+    *{
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+  </style>
+
 </head>
 <body>
 
-<div class="row">
-<div class="col"></div>
-  <div class="col flex-row align-items-center justify-content-center ">
-    <h3>Please Log In</h3>
-    <div class="bg-danger" th:if="${param.error}">
-      Invalid username and password.</div>
-    <div class="bg-success" th:if="${param.logout}">
-      You have been logged out.</div>
-    <form th:action="@{/login}" method="post">
-      <div class="mb-5">
-        <input type="text" name="username" placeholder="Username"/>
-      </div>
-      <div class="mb-5">
-        <input type="password" name="password" placeholder="Password"/>
-      </div>
-      <button class="btn btn-dark" type="submit" value="Log in">Log in
-      </button>
-    </form>
+<div class="row min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="d-flex justify-content-center">
+<div>
+  <h3>Please Log In</h3>
+  <div class="bg-danger" th:if="${param.error}">
+    Invalid username and password.</div>
+  <div class="bg-success" th:if="${param.logout}">
+    You have been logged out.</div>
+  <form th:action="@{/login}" method="post">
+    <div class="mb-5">
+      <input type="text" name="username" placeholder="Username"/>
+    </div>
+    <div class="mb-5">
+      <input type="password" name="password" placeholder="Password"/>
+    </div>
+    <button class="btn btn-dark" type="submit" value="Log in">Log in
+    </button>
+  </form>
+</div>
   </div>
-  <div class="col"></div>
 
 </div>
 

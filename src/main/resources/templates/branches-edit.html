@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/services" class="nav-link active">
+                    <a href="/admin/services" class="nav-link link-dark">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#table"></use>
                         </svg>
@@ -67,7 +67,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/branches" class="nav-link link-dark">
+                    <a href="/admin/branches" class="nav-link active">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#grid"></use>
                         </svg>
@@ -96,41 +96,21 @@
 
     <div class="col-9 mt-lg-5 ">
 
-        <form method="post" action="/admin/services/edit" th:object="${service}">
-
-                <input th:field="${service.id}"  hidden>
-                <input th:field="${service.imageLink}"  hidden>
+        <form method="post" action="/admin/branches/edit" th:object="${branch}">
+                <input th:field="${branch.id}" hidden>
             <div class="mb-3">
                 <label for="fullName" class="form-label">Full name</label>
-                <input th:field="${service.name}" type="text" class="form-control" id="fullName"
+                <input th:field="${branch.name}" type="text" class="form-control" id="fullName"
                        aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
                 <label for="instagramLink" class="form-label">Instagram link</label>
-                <input th:field="${service.price}" type="text" class="form-control" id="instagramLink">
+                <input th:field="${branch.location}" type="text" class="form-control" id="instagramLink">
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
-        <div class="row  mt-lg-5 ">
-
-            <div class="col">
-                <h3>Actual image</h3>
-                <img height="100px" th:src="${service.getImageLink()}">
-            </div>
-            <div class="col">
-                <form method="post" th:action="@{|/images/service/${service.getId()}|}" enctype="multipart/form-data">
-                    Select File: <input onchange="changeOnFile(event)" type="file" name="file"/>
-                    <button class="btn btn-warning" type="submit">Submit</button>
-                    <div id="addImage" class="justify-content-center">
-
-                    </div>
-                </form>
-
-            </div>
-
-        </div>
 
     </div>
 

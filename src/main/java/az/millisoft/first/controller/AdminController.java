@@ -1,8 +1,10 @@
 package az.millisoft.first.controller;
 
 import az.millisoft.first.entity.Barber;
+import az.millisoft.first.entity.Branch;
 import az.millisoft.first.entity.Service;
 import az.millisoft.first.repository.BarberRepository;
+import az.millisoft.first.repository.BranchRepository;
 import az.millisoft.first.repository.ReservationRepository;
 import az.millisoft.first.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,8 @@ public class AdminController {
     private final BarberRepository barberRepository;
 
     private final ServiceRepository serviceRepository;
+
+    private final BranchRepository branchRepository;
 
     @GetMapping
     public String admin(){
@@ -86,10 +90,26 @@ public class AdminController {
     }
 
     @GetMapping( "/branches")
-    public String branches(){
-        return "branches";
+    public ModelAndView branches(){
+        ModelAndView modelAndView = new ModelAndView("branches");
+        modelAndView.addObject("branches",branchRepository.findAll());
+        modelAndView.addObject("branchRequest",new Branch());
+        return modelAndView;
     }
 
+    @GetMapping( "/branches/edit/{id}")
+    public ModelAndView branchesEdit(@PathVariable("id") Integer id){
+        Branch branch = branchRepository.findById(id).orElseThrow();
+        ModelAndView modelAndView = new ModelAndView("branches-edit");
+        modelAndView.addObject("branch", branch);
+        return modelAndView;
+    }
+
+    @PostMapping( "/branches/edit")
+    public RedirectView branchesEditPost(@ModelAttribute Branch branch){
+        branchRepository.save(branch);
+        return new RedirectView("/admin/branches");
+    }
 
 
 }
