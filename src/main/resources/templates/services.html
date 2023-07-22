@@ -123,12 +123,10 @@
                     </a>
                 </td>
                 <td>
-                    <form th:action="@{|/admin/reservations/${service.getId()}|}" method="post">
-                        <button type="submit" class="btn btn-outline-danger">
+                        <button  th:onclick="deleteService([[${service}]])" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="bi bi-trash"></i>
                             DELETE
                         </button>
-                    </form>
                 </td>
                 <td>
                     <a th:href="@{|/admin/services/edit/${service.getId()}|}">
@@ -143,10 +141,34 @@
         </table>
     </div>
 
-
-
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Do you submit to delete?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form id="formDelete" action="/" method="post">
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    function deleteService(service) {
+        document.getElementById('modalBody').innerHTML = service.name + " will be deleted";
+        document.getElementById('formDelete').action = "/admin/services/delete/" + service.id;
+    }
+</script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/click-scroll.js"></script>

@@ -2,6 +2,7 @@ package az.millisoft.first.controller;
 
 import az.millisoft.first.entity.Reservation;
 import az.millisoft.first.repository.ReservationRepository;
+import az.millisoft.first.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,12 +21,12 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/reservation")
 public class ReservationController {
 
-    private final ReservationRepository repository;
+    private final ReservationService service;
 
     @PostMapping
     public RedirectView addReservation(@ModelAttribute Reservation reservation){
         System.out.println(reservation);
-        repository.save(reservation);
+        service.save(reservation);
         return new RedirectView("/");
     }
 

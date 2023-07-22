@@ -2,8 +2,8 @@ package az.millisoft.first.controller;
 
 import az.millisoft.first.entity.Barber;
 import az.millisoft.first.entity.Service;
-import az.millisoft.first.repository.BarberRepository;
-import az.millisoft.first.repository.ServiceRepository;
+import az.millisoft.first.service.BarberService;
+import az.millisoft.first.service.ServicesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +19,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ImageController {
 
-    private final BarberRepository barberRepository;
-    private final ServiceRepository serviceRepository;
+    private final BarberService barberService;
+    private final ServicesService servicesService;
 
     @RequestMapping(value = "/barber/{id}",method = RequestMethod.GET,produces = "image/webp")
     public byte[] getBarberImage(@PathVariable("id") String id) throws IOException {
@@ -39,9 +39,9 @@ public class ImageController {
         fileOutputStream.write(file.getBytes());
         fileOutputStream.close();
 
-        Barber barber = barberRepository.findById(id).orElseThrow();
+        Barber barber = barberService.getById(id);
         barber.setImageLink("http://localhost:8080/images/barber/"+ fileName);
-        barberRepository.save(barber);
+        barberService.save(barber);
 
         return new RedirectView("/admin/barbers/edit/" + id);
     }
@@ -59,14 +59,13 @@ public class ImageController {
 
         String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
         String fileName = id + "." + extension;
-
         FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\ugurk\\Desktop\\images\\service\\" + fileName);
         fileOutputStream.write(file.getBytes());
         fileOutputStream.close();
 
-        Service service = serviceRepository.findById(id).orElseThrow();
+        Service service = servicesService.getById(id);
         service.setImageLink("http://localhost:8080/images/service/"+ fileName);
-        serviceRepository.save(service);
+        servicesService.save(service);
 
         return new RedirectView("/admin/services/edit/" + id);
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin panel</title>
@@ -116,12 +116,10 @@
                 <td th:text="${branch.getName()}">Mark</td>
                 <td th:text="${branch.getLocation()}">Otto</td>
                 <td>
-                    <form th:action="@{|/admin/branches/${branch.getId()}|}" method="post">
-                        <button type="submit" class="btn btn-outline-danger">
+                        <button  th:onclick="deleteBranch([[${branch}]])" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="bi bi-trash"></i>
                             DELETE
                         </button>
-                    </form>
                 </td>
                 <td>
                     <a th:href="@{|/admin/branches/edit/${branch.getId()}|}">
@@ -140,10 +138,37 @@
 
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Do you submit to delete?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form id="formDelete" action="/" method="post">
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+ function deleteBranch(branch) {
+     document.getElementById('modalBody').innerHTML = branch.name + " will be deleted";
+     document.getElementById('formDelete').action = "/admin/branches/delete/" + branch.id;
+ }
+</script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/click-scroll.js"></script>
 <script src="/js/custom.js"></script>
+
 
 </body>
 </html>
