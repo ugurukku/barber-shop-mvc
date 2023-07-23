@@ -27,7 +27,7 @@ public class ReservationController {
     public RedirectView addReservation(@ModelAttribute Reservation reservation){
         System.out.println(reservation);
         service.save(reservation);
-        return new RedirectView("/");
+        return new RedirectView("/?success");
     }
 
 }
