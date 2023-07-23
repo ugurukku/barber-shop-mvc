@@ -68,13 +68,11 @@
             </ul>
             <hr>
             <div class="dropdown">
-
-                <form class="d-grid" th:action="@{/logout}"  method="post">
-
-                    <button type="submit" class="btn btn-dark">
+                <div class="d-grid">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#logOutModal">
                         Log out
                     </button>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -134,6 +132,27 @@
 
 
 </div>
+
+<div class="modal fade" id="logOutModal" tabindex="-1" aria-labelledby="logOutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logOutModalLabel">You are about to log out!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-danger">LOG OUT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

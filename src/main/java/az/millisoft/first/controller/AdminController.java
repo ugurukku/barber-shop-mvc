@@ -3,15 +3,12 @@ package az.millisoft.first.controller;
 import az.millisoft.first.entity.Barber;
 import az.millisoft.first.entity.Branch;
 import az.millisoft.first.entity.Service;
-import az.millisoft.first.repository.BarberRepository;
-import az.millisoft.first.repository.BranchRepository;
-import az.millisoft.first.repository.ReservationRepository;
-import az.millisoft.first.repository.ServiceRepository;
 import az.millisoft.first.service.BarberService;
 import az.millisoft.first.service.BranchService;
 import az.millisoft.first.service.ReservationService;
 import az.millisoft.first.service.ServicesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final ReservationService reservationService;
