@@ -119,7 +119,7 @@
       </div>
       <div  class="col">
         <form method="post" th:action="@{|/images/barber/${barber.getId()}|}" enctype="multipart/form-data">
-          Select File: <input onchange="changeOnFile(event)" type="file" name="file"/>
+          Select File: <input onchange="changeOnFile(event)" required type="file" name="file"/>
           <button class="btn btn-warning" type="submit">Submit</button>
           <div id="addImage" class="justify-content-center">
 
