@@ -17,14 +17,15 @@ public class InjectOneUser {
     private final UserRepository userRepository;
 
     @Bean
-    public void injectUser(){
-        User user = new User();
-        user.setId(1111);
-        user.setRole(Role.ADMIN);
-        user.setEmail("ugurkarimli1@gmail.com");
-        user.setPassword(passwordEncoder.encode("ugur2003"));
-
-        userRepository.save(user);
+    public void injectUser() {
+        if (!userRepository.existsByEmail("ugurkarimli1@gmail.com")) {
+            User user = new User();
+            user.setId(1111);
+            user.setRole(Role.ADMIN);
+            user.setEmail("ugurkarimli1@gmail.com");
+            user.setPassword(passwordEncoder.encode("ugur2003"));
+            userRepository.save(user);
+        }
     }
 
 }

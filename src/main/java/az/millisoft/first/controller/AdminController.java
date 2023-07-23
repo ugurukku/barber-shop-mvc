@@ -17,7 +17,6 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final ReservationService reservationService;
