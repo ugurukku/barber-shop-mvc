@@ -7,6 +7,8 @@ import az.millisoft.first.service.BarberService;
 import az.millisoft.first.service.ImageService;
 import az.millisoft.first.service.ServicesService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +17,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ImageServiceImpl implements ImageService {
 
     private final BarberService barberService;
@@ -22,6 +25,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public byte[] getBarberImage(String id) {
+        log.info("ImageService getBarberImage() request accepted");
         try (FileInputStream fileInputStream = new FileInputStream("C:\\Users\\ugurk\\Desktop\\images\\barber\\" + id)) {
             return fileInputStream.readAllBytes();
         } catch (IOException exception) {
@@ -31,6 +35,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void addBarberImage(Integer id, MultipartFile file) {
+        log.info("ImageService addBarberImage() request accepted");
         String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
         String fileName = id + "." + extension;
 
@@ -48,6 +53,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public byte[] getServiceImage(String id) {
+        log.info("ImageService getServiceImage() request accepted");
+
         try (FileInputStream fileInputStream = new FileInputStream("C:\\Users\\ugurk\\Desktop\\images\\service\\" + id)) {
             return fileInputStream.readAllBytes();
         } catch (IOException exception) {
@@ -57,6 +64,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void addServiceImage(Integer id, MultipartFile file) {
+        log.info("ImageService addServiceImage() request accepted");
         String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
         String fileName = id + "." + extension;
         try (FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\ugurk\\Desktop\\images\\service\\" + fileName)) {
