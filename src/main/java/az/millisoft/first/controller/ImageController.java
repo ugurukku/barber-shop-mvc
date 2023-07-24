@@ -1,16 +1,11 @@
 package az.millisoft.first.controller;
 
-import az.millisoft.first.entity.Barber;
-import az.millisoft.first.entity.Service;
-import az.millisoft.first.service.BarberService;
 import az.millisoft.first.service.ImageService;
-import az.millisoft.first.service.ServicesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/images")

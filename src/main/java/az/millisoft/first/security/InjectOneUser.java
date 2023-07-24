@@ -4,6 +4,7 @@ import az.millisoft.first.entity.Role;
 import az.millisoft.first.entity.User;
 import az.millisoft.first.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ public class InjectOneUser {
 
     @Bean
     public void injectUser() {
+
         if (!userRepository.existsByEmail("ugurkarimli1@gmail.com")) {
             User user = new User();
             user.setId(1111);
